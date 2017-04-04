@@ -32,6 +32,11 @@ public class DriveTrain extends Subsystem implements Recordable {
     	right.set(speed);
     }
     
+    public void resetEncoders() {
+    	leftEnc.reset();
+    	rightEnc.reset();
+    }
+    
     public double getLeftDistance() {
     	return leftEnc.getDistance();
     }

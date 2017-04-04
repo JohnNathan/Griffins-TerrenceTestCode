@@ -111,6 +111,7 @@ public class Robot extends IterativeRobot {
 		boolean rec_b = oi.getRecordingButton();
 		if (rec_b_prev != rec_b && rec_b) {
 			recording = true;
+			InstanceMap.driveTrain.resetEncoders();
 		} else if (rec_b_prev != rec_b && !rec_b) {
 			recording = false;
 			sr.writeData();
