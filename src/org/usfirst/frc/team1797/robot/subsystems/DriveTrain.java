@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1797.robot.subsystems;
 
+import org.usfirst.frc.team1797.robot.commands.DriveCommand;
 import org.usfirst.frc.team1797.util.RecordingFollower;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -39,8 +40,7 @@ public class DriveTrain extends Subsystem implements Recordable {
     }
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        this.setDefaultCommand(new DriveCommand());
     }
     
     // dt, leftSpeed, rightSpeed, leftDistance, rightDistance
