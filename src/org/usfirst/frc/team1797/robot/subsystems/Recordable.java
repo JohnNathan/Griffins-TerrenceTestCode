@@ -4,5 +4,6 @@ public interface Recordable {
 	
 	public double[] getData();
 	public void putData(double[] data);
+	public int getLength();
 	
 }

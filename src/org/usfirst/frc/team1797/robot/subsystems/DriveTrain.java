@@ -56,11 +56,18 @@ public class DriveTrain extends Subsystem implements Recordable {
     	return new double[] { dt, left.get(), right.get(), this.getLeftDistance(), this.getRightDistance() };
     }
     
+    @Override
+    public int getLength() {
+    	return 5;
+    }
+    
     private RecordingFollower rf;
     {
     	rf = new RecordingFollower(this);
+    	rf.setPIDVA(0.0, 0.0, 0.0);
     	rf.setPIDVA(0.01, 0.0, 0.001);
     }
+    // make this part of the recordable interface
     public void startFollowRecording() {
     	this.rf.setStartPoint();
     	this.rf.reset();

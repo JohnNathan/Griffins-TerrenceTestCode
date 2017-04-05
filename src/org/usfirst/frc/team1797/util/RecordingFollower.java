@@ -45,7 +45,7 @@ public class RecordingFollower {
 		double right_value = kp * err_r
 //				+ ki * (err + err_last) * dt
 				+ kd * (err_r - err_last_r) / dt
-				+ rightF;
+				- rightF;
 		err_last_l = err_l;
 		err_last_r = err_r;
 			

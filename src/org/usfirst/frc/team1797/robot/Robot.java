@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1797.robot;
 
+import org.usfirst.frc.team1797.robot.commands.FollowRecordedAuto;
 import org.usfirst.frc.team1797.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1797.robot.subsystems.SystemRecorder;
 
@@ -32,7 +33,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -43,6 +44,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 		
 		CameraServer.getInstance().startAutomaticCapture();
+		
+		instance = this;
 	}
 
 	/**
@@ -85,6 +88,12 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		
+		FollowRecordedAuto.instance.load("/home/lvuser/auto-2.csv");
+		InstanceMap.driveTrain.startFollowRecording();
+		FollowRecordedAuto.instance.start();
+		
 	}
 
 	/**
@@ -125,6 +134,7 @@ public class Robot extends IterativeRobot {
 			sr.collectData();
 		}
 	}
+	public static Robot instance;
 	private boolean recording = false;
 	private boolean rec_b_prev = false;
 	public SystemRecorder sr = new SystemRecorder(InstanceMap.driveTrain);

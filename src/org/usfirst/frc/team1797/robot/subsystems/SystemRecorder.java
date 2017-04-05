@@ -11,21 +11,27 @@ public class SystemRecorder {
 
 	public final static String DEFAULT_PATH = "/home/lvuser/";
 	public final static String BASE_FILE_NAME = "auto";
+	
+	private class RecordableSystem {
+		private Recordable rec;
+		private int numDatas;
+		private RecordableSystem(Recordable rec) { this.rec = rec; numDatas = rec.getLength(); }
+	}
 
-	private Recordable[] list;
+	private RecordableSystem[] list;
 	private LinkedList<double[]> data;
 
 	public SystemRecorder(Recordable...recordables) {
-		list = recordables;
+		RecordableSystem[] tmp = new RecordableSystem[recordables.length];
+		for (int i = 0; i < tmp.length; ++i) tmp[i] = new RecordableSystem(recordables[i]);
+		list = tmp;
 		data = new LinkedList<double[]>();
 	}
 	
-	// Use HashMap and edit Recordable interface to have public int getLength(); ?? ahwmg so good
-	
 	public double[] collectData() {
 		double[] buf = new double[]{};
-		for (Recordable r : list) {
-			double[] newData = r.getData();
+		for (RecordableSystem r : list) {
+			double[] newData = r.rec.getData();
 			double[] tmp = new double[buf.length + newData.length];
 			System.arraycopy(buf, 0, tmp, 0, buf.length);
 			int old_length = buf.length;
@@ -34,6 +40,16 @@ public class SystemRecorder {
 		}
 		data.add(buf);
 		return buf;
+	}
+	
+	public void putData(double[] vals) {
+		int start = 0;
+		for (RecordableSystem r : list) {
+			double[] data = new double[r.numDatas];
+			System.arraycopy(vals, start, data, 0, r.numDatas);
+			r.rec.putData(data);
+			start += r.numDatas;
+		}
 	}
 
 	public boolean writeData() {
@@ -56,8 +72,10 @@ public class SystemRecorder {
 			fos.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			data = new LinkedList<double[]>();
 			return false;
 		}
+		data = new LinkedList<double[]>();
 		return true;
 	}
 }
