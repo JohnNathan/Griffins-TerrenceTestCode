@@ -3,6 +3,7 @@ package org.usfirst.frc.team1797.robot;
 import org.usfirst.frc.team1797.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1797.robot.subsystems.SystemRecorder;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -40,6 +41,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		SmartDashboard.putData("Auto mode", chooser);
+		
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -124,7 +127,7 @@ public class Robot extends IterativeRobot {
 	}
 	private boolean recording = false;
 	private boolean rec_b_prev = false;
-	private SystemRecorder sr = new SystemRecorder(InstanceMap.driveTrain);
+	public SystemRecorder sr = new SystemRecorder(InstanceMap.driveTrain);
 
 	/**
 	 * This function is called periodically during test mode

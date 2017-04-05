@@ -19,7 +19,9 @@ public class SystemRecorder {
 		list = recordables;
 		data = new LinkedList<double[]>();
 	}
-
+	
+	// Use HashMap and edit Recordable interface to have public int getLength(); ?? ahwmg so good
+	
 	public double[] collectData() {
 		double[] buf = new double[]{};
 		for (Recordable r : list) {
