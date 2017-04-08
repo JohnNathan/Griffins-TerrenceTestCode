@@ -50,7 +50,7 @@ public class RecordingFollower {
 		err_last_r = err_r;
 			
 		//debug statement
-		System.out.println(err_l + "\t" + err_r);
+//		System.out.println(err_l + "\t" + err_r);
 		
 		drivetrain.setLeftSpeed(left_value);
 		drivetrain.setRightSpeed(-right_value);

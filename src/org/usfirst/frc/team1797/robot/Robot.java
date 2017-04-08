@@ -2,6 +2,7 @@ package org.usfirst.frc.team1797.robot;
 
 import org.usfirst.frc.team1797.robot.commands.FollowRecordedAuto;
 import org.usfirst.frc.team1797.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1797.robot.subsystems.FooSystem;
 import org.usfirst.frc.team1797.robot.subsystems.SystemRecorder;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 	
 	public static class InstanceMap {
 		public static final DriveTrain driveTrain = new DriveTrain();
+		public static final FooSystem foo = new FooSystem();
 		private static void poke() {}
 	}
 	static {
@@ -90,7 +92,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.start();
 		
 		
-		FollowRecordedAuto.instance.load("/home/lvuser/auto-2.csv");
+		FollowRecordedAuto.instance.load("/home/lvuser/auto-1.csv");
 		InstanceMap.driveTrain.startFollowRecording();
 		FollowRecordedAuto.instance.start();
 		
@@ -120,6 +122,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		InstanceMap.foo.isFoo = oi.getDriverController().x();
+		
 		boolean rec_b = oi.getRecordingButton();
 		if (rec_b_prev != rec_b && rec_b) {
 			recording = true;
@@ -137,7 +142,7 @@ public class Robot extends IterativeRobot {
 	public static Robot instance;
 	private boolean recording = false;
 	private boolean rec_b_prev = false;
-	public SystemRecorder sr = new SystemRecorder(InstanceMap.driveTrain);
+	public SystemRecorder sr = new SystemRecorder(InstanceMap.driveTrain, InstanceMap.foo);
 
 	/**
 	 * This function is called periodically during test mode
